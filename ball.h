@@ -12,6 +12,7 @@ class ball{
     private:
         Vector2 pos, acc{1.0,1.0};
         float vel,rad=10.0;
+        int score=0;
     public:
         ball(){}
 
@@ -62,30 +63,46 @@ class ball{
         bool collision(vector<blocks> *bs){
                 //blocks bc=b;
                 for(int i=0;i< bs->size();i++){
-                    blocks p= bs->at(i);
+                    //blocks p= bs->at(i);
+                    blocks *p = bs->data()+i;
                     Vector2 r;
-                    r = p.getCenter();
+                    r = p->getCenter();
 
-                    bool hitLR =((pos.y >= r.y-p.getRectH()/2.0f && pos.y <= r.y+p.getRectH()/2.0f)&&CheckCollisionCircleRec(pos,rad,p.getRect()));
-                    bool hitTD = ((pos.x >= r.x-p.getRectW()/2.0f+1.0f && pos.x <= r.x+p.getRectW()/2.0f+1.0f)&&CheckCollisionCircleRec(pos,rad,p.getRect()));
+                    bool hitLR =((pos.y >= r.y-p->getRectH()/2.0f && pos.y <= r.y+p->getRectH()/2.0f)&&CheckCollisionCircleRec(pos,rad,p->getRect()));
+                    bool hitTD = ((pos.x >= r.x-p->getRectW()/2.0f+1.0f && pos.x <= r.x+p->getRectW()/2.0f+1.0f)&&CheckCollisionCircleRec(pos,rad,p->getRect()));
                     
                     if(hitTD&&!hitLR){
                         acc.y *= -1;
                         cout << "acertou os td" << endl;
-                        bs->erase(bs->begin()+i);
+                        if(p->getLevel() == 1){
+                            bs->erase(bs->begin()+i);
+                            score = p->getValue();
+                            return 1;
+                        }
+                        p->setLevel(p->getLevel()-1);
                         return 1;
                     }
                     else if(hitLR&&!hitTD){
                         acc.x *= -1;
                         cout << "acertou os lr" << endl;
-                        bs->erase(bs->begin()+i);
+                        if(p->getLevel() == 1){
+                            bs->erase(bs->begin()+i);
+                            score = p->getValue();
+                            return 1;
+                        }
+                        p->setLevel(p->getLevel()-1);
                         return 1;
                     }
                     else if(hitTD&&hitLR){
                         acc.x *= -1;
                         acc.y *= -1;
                         cout << "acertou o canto" << endl;
-                        bs->erase(bs->begin()+i);
+                        if(p->getLevel() == 1){
+                            bs->erase(bs->begin()+i);
+                            score = p->getValue();
+                            return 1;
+                        }
+                        p->setLevel(p->getLevel()-1);
                         return 1;
                     }
                 }
@@ -100,6 +117,9 @@ class ball{
             if(pos.y>590 || pos.y <10){
                 acc.y *= -1;
             }
+        }
+        int getScore(){
+            return score;
         }
 
         

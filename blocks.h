@@ -1,24 +1,37 @@
 #ifndef BLOCKS
 #define BLOCKS
 #include "raylib.h"
+#include<iostream>
+
+using namespace std;
 
 class blocks{
     private:
         Rectangle rect;
         float w=50,h=20;
-        int value = 100;
+        int value = 200;
+        int level;
     public:
         blocks(){
 
         }
-        void set(float x,float y){
+        void set(float x,float y, int lvl){
             rect.x = x;
             rect.y = y;
             rect.width =w;
             rect.height=h;
+            level = lvl;
         }
         void atualiza(){
-            DrawRectangle(rect.x,rect.y,rect.width,rect.height,ORANGE);
+            if(level==1){
+                DrawRectangle(rect.x,rect.y,rect.width,rect.height,YELLOW);
+            }
+            if(level==2){
+                DrawRectangle(rect.x,rect.y,rect.width,rect.height,ORANGE);
+            }
+            if(level==3){
+                DrawRectangle(rect.x,rect.y,rect.width,rect.height,RED);
+            }
         }
         Rectangle getRect(){
             return rect;
@@ -44,6 +57,13 @@ class blocks{
 
         int getValue(){
             return value;
+        }
+        int getLevel(){
+            return level;
+        }
+        void setLevel(int i){
+            level = i;
+            cout << "Level of hit: " << level << endl;
         }
 };
 
