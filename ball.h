@@ -35,7 +35,7 @@ class ball{
         void atualiza(){
             pos.x = pos.x + acc.x*vel;
             pos.y = pos.y + acc.y*vel;
-            DrawCircle(pos.x,pos.y,rad,MAROON);
+            DrawCircle(pos.x,pos.y,rad,BLUE);
         }
         void collision(player *p){
             
