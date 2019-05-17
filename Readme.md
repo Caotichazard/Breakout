@@ -9,7 +9,9 @@ I made all the game logic and code for this game.After that jam I became more in
 
 ## The project
 This game is as simple as it gets, just a basic breakout.
+
 My goals:
+
     -Make the game playable;
     -Make a score system;
     -Make a menu;
