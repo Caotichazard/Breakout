@@ -1,6 +1,6 @@
 # A Simple Breakout Game
 
-Hi, I'm a CS student from UFScar a brazillian university, and right now I'm delving into the world of gamedev.
+Hi, I'm a CS student and right now I'm delving into the world of gamedev.
 
 My prior experience with gamedev is close to none, I have made a game with some friends for a gamejam:
 https://gamejolt.com/games/cybermyth/374618
