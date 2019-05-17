@@ -33,8 +33,8 @@ class ball{
             return vel;
         }
         void atualiza(){
-            pos.x = pos.x + acc.x*vel;
-            pos.y = pos.y + acc.y*vel;
+            pos.x = pos.x + (acc.x*vel)*GetFrameTime();
+            pos.y = pos.y + (acc.y*vel)*GetFrameTime();
             DrawCircle(pos.x,pos.y,rad,BLUE);
         }
         void collision(player *p){

@@ -6,7 +6,7 @@
 class player{
     private:   
         Rectangle r; 
-        float vel=3.0;
+        float vel=250.0;
     public:
         player(float x,float y){
             r.x = x;
@@ -17,9 +17,9 @@ class player{
         void atualiza(){
             
             if(IsKeyDown(KEY_LEFT) && r.x > 0){
-                r.x -= vel;
+                r.x -= vel*GetFrameTime();
             }else if(IsKeyDown(KEY_RIGHT) && r.x < 425){
-                r.x += vel;
+                r.x += vel*GetFrameTime();
             }
             DrawRectangle(r.x,r.y,r.width,r.height,WHITE);
             
