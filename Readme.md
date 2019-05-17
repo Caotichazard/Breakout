@@ -1,4 +1,4 @@
-#A Simple Breakout Game
+# A Simple Breakout Game
 
 Hi, I'm a CS student from UFScar a brazillian university, and right now I'm delving into the world of gamedev.
 
