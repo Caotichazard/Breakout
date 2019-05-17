@@ -6,7 +6,7 @@
 class player{
     private:   
         Rectangle r; 
-        float vel=2.0;
+        float vel=3.0;
     public:
         player(float x,float y){
             r.x = x;

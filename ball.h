@@ -25,61 +25,52 @@ class ball{
         }
         void collision(player *p){
             
-                /*int recCenterX = (int)(p->getRectX() + p->getRectW()/2.0f);
-                int recCenterY = (int)(p->getRectY() + p->getRectH()/2.0f);
-
-                float dx = (float)fabs(pos.x - recCenterX);
-                float dy = (float)fabs(pos.y - recCenterY);
-
-                if (dx > (p->getRectW()/2.0f + rad)) { return false; }
-                if (dy > (p->getRectH()/2.0f + rad)) { return false; }
-
-                if (dx <= (p->getRectW()/2.0f) && dy <= (p->getRectH()/2.0f)) { 
-                    if(dy < p->getRectH()/2.0f){
-                        acc.y *= -1;
-                    }
-                    if(dy == p->getRectH()/2.0f){
-                        acc.x *=-1;
-                    }
-                }
-                
-
-                float cornerDistanceSq = (dx - p->getRectW()/2.0f)*(dx - p->getRectW()/2.0f) +
-                                        (dy - p->getRectH()/2.0f)*(dy - p->getRectH()/2.0f);
-
-                if(cornerDistanceSq <= (rad*rad)){
-
-                }*/
+            
                 Vector2 r;
                 r = p->getCenter();
-                if(pos.y == r.y-p->getRectH()/2.0f || pos.y == r.y+p->getRectH()/2.0f){
-                    if(CheckCollisionCircleRec(pos,rad,p->getRect())){
+
+                    bool hitLR =((pos.y >= r.y-p->getRectH()/2.0f && pos.y <= r.y+p->getRectH()/2.0f)&&CheckCollisionCircleRec(pos,rad,p->getRect()));
+                    bool hitTD = ((pos.x >= r.x-p->getRectW()/2.0f+1.0f && pos.x <= r.x+p->getRectW()/2.0f+1.0f)&&CheckCollisionCircleRec(pos,rad,p->getRect()));
+                    
+                    if(hitTD&&!hitLR){
                         acc.y *= -1;
+                        
                     }
-                }
-                if(pos.x == r.x-p->getRectW()/2.0f || pos.x == r.x+p->getRectW()/2.0f){
-                    if(CheckCollisionCircleRec(pos,rad,p->getRect())){
+                    else if(hitLR&&!hitTD){
                         acc.x *= -1;
+                        
                     }
-                }
+                    else if(hitTD&&hitLR){
+                        acc.x *= -1;
+                        acc.y *= -1;
+                        
+                    }
         }
         void collision(vector<blocks> *bs){
                 //blocks bc=b;
                 for(int i=0;i< bs->size();i++){
-                    blocks b= bs->at(i);
+                    blocks p= bs->at(i);
                     Vector2 r;
-                    r = b.getCenter();
-                    if(pos.y == r.y-b.getRectH()/2.0f-5.0f || pos.y == r.y+b.getRectH()/2.0f+5.0f){
-                        if(CheckCollisionCircleRec(pos,rad,b.getRect())){
-                            acc.y *= -1;
-                            bs->erase(bs->begin()+i);
-                        }
+                    r = p.getCenter();
+
+                    bool hitLR =((pos.y >= r.y-p.getRectH()/2.0f && pos.y <= r.y+p.getRectH()/2.0f)&&CheckCollisionCircleRec(pos,rad,p.getRect()));
+                    bool hitTD = ((pos.x >= r.x-p.getRectW()/2.0f+1.0f && pos.x <= r.x+p.getRectW()/2.0f+1.0f)&&CheckCollisionCircleRec(pos,rad,p.getRect()));
+                    
+                    if(hitTD&&!hitLR){
+                        acc.y *= -1;
+                        cout << "acertou os td" << endl;
+                        bs->erase(bs->begin()+i);
                     }
-                    else if(pos.x == r.x-b.getRectW()/2.0f-5.0f || pos.x == r.x+b.getRectW()/2.0f+5.0f){
-                        if(CheckCollisionCircleRec(pos,rad,b.getRect())){
-                            acc.x *= -1;
-                            bs->erase(bs->begin()+i);
-                        }
+                    else if(hitLR&&!hitTD){
+                        acc.x *= -1;
+                        cout << "acertou os lr" << endl;
+                        bs->erase(bs->begin()+i);
+                    }
+                    else if(hitTD&&hitLR){
+                        acc.x *= -1;
+                        acc.y *= -1;
+                        cout << "acertou o canto" << endl;
+                        bs->erase(bs->begin()+i);
                     }
                 }
                 

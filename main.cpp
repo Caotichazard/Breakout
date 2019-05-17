@@ -33,7 +33,7 @@ int main(){
     
     
     while ( !WindowShouldClose()){
-        b1.collision(&bs);
+        //b1.collision(&bs);
         for (int i=0;i<bs.size(); i++){
             bs[i].atualiza();
             //b1.collision(bs[i]);
