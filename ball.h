@@ -11,12 +11,25 @@ using namespace std;
 class ball{
     private:
         Vector2 pos, acc{1.0,1.0};
-        float vel=5.0,rad=10.0;
+        float vel,rad=10.0;
     public:
+        ball(){}
 
         ball(float x, float y){
             pos.x = x;
             pos.y = y;
+        }
+
+        void setPos(float x, float y){
+            pos.x=x;
+            pos.y=y;
+
+        }
+        void setVel(float v){
+            vel = v;
+        }
+        float getVel(){
+            return vel;
         }
         void atualiza(){
             pos.x = pos.x + acc.x*vel;
@@ -46,7 +59,7 @@ class ball{
                         
                     }
         }
-        void collision(vector<blocks> *bs){
+        bool collision(vector<blocks> *bs){
                 //blocks bc=b;
                 for(int i=0;i< bs->size();i++){
                     blocks p= bs->at(i);
@@ -60,19 +73,23 @@ class ball{
                         acc.y *= -1;
                         cout << "acertou os td" << endl;
                         bs->erase(bs->begin()+i);
+                        return 1;
                     }
                     else if(hitLR&&!hitTD){
                         acc.x *= -1;
                         cout << "acertou os lr" << endl;
                         bs->erase(bs->begin()+i);
+                        return 1;
                     }
                     else if(hitTD&&hitLR){
                         acc.x *= -1;
                         acc.y *= -1;
                         cout << "acertou o canto" << endl;
                         bs->erase(bs->begin()+i);
+                        return 1;
                     }
                 }
+                return 0;
                 
             
         }
@@ -84,6 +101,7 @@ class ball{
                 acc.y *= -1;
             }
         }
+
         
 };
 

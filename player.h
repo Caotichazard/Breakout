@@ -46,6 +46,7 @@ class player{
             center.y=(r.y + r.height/2.0f);
             return center;
         }
+        
 };
 
 #endif

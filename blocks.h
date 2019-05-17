@@ -6,6 +6,7 @@ class blocks{
     private:
         Rectangle rect;
         float w=50,h=20;
+        int value = 100;
     public:
         blocks(){
 
@@ -39,6 +40,10 @@ class blocks{
             center.x=(rect.x + rect.width/2.0f);
             center.y=(rect.y + rect.height/2.0f);
             return center;
+        }
+
+        int getValue(){
+            return value;
         }
 };
 
