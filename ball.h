@@ -80,6 +80,7 @@ class ball{
                             return 1;
                         }
                         p->setLevel(p->getLevel()-1);
+
                         return 1;
                     }
                     else if(hitLR&&!hitTD){

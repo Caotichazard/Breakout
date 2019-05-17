@@ -29,7 +29,7 @@ class blocks{
             if(level==2){
                 DrawRectangle(rect.x,rect.y,rect.width,rect.height,ORANGE);
             }
-            if(level==3){
+            if(level>=3){
                 DrawRectangle(rect.x,rect.y,rect.width,rect.height,RED);
             }
         }
