@@ -16,63 +16,85 @@ using namespace std;
 class game{
     private:
         int score = 0;
+        ball b1;
+        player p1;
+        vector<blocks> bs;
+        bool gamePaused=false;
     public:
     void run(){
-        int screenH = 600;
-        int screenW = 800;
-        player p1(250,540);
-        ball b1;
-
-        vector<blocks> bs=createBlocks(1);
-        
-        initBall(b1,p1);
-        
-        InitWindow(screenW,screenH,"Breakout");
-        SetTargetFPS(120);
-        
-        
-        
+        gameSetup();
+                
         while ( !WindowShouldClose()){
-
-            printScore(score);
-            printBorders();
-            //b1.collision(&bs);
-            for (int i=0;i<bs.size(); i++){
-                bs[i].atualiza();
-                //b1.collision(bs[i]);
-            }
-            if(bs.size()==0){
-                if(score/10000<3){
-                    bs=createBlocks(1+score/10000);
-                }else{bs=createBlocks(3);}
-                initBall(b1,p1);
-            }
-            if(b1.getVel()==0){
-                initBall(b1,p1);
-                if(IsKeyPressed(KEY_UP)){
-                    launchBall(b1);
-                }
-            }
-            p1.atualiza();
-            b1.atualiza();
-            b1.collision(&p1);
-            if(b1.collision(&bs)){
-                addScore(b1.getScore());
-                //cout<< "score is: "<< score << endl;
-            }
-            b1.collision();
-
+            
             BeginDrawing();
             ClearBackground(BLACK);
-            
-            
+            if(!gamePaused){
+                gameUpdate();
+                gameDraw();
+                
+                if(bs.size()==0){
+                    levelReset();
+                }
+                if(IsKeyPressed(KEY_DOWN)){
+                    
+                    gamePaused = true;
+                }
+            }else{
+                gameDraw();
+                DrawText("PAUSE",300, 300, 18, RAYWHITE);
+                if(IsKeyPressed(KEY_DOWN)){
+                    gamePaused = false;
+                }
+            }
             EndDrawing();
         }
 
-        CloseWindow();
+    }
+
+    void gameSetup(){
+        p1.setup(250,540);
+        initBall(b1,p1);
+        bs=createBlocks(1);
         
     }
 
+    void gameUpdate(){
+        
+        p1.update();
+        b1.update();
+        
+        
+        if(b1.getVel()==0){
+            initBall(b1,p1);
+            if(IsKeyPressed(KEY_UP)){
+               launchBall(b1);
+            }
+        }
+        b1.collision(&p1);
+        if(b1.collision(&bs)){
+            addScore(b1.getScore());
+        }
+        b1.collision();
+    }
+
+    void levelReset(){
+
+        if(score/10000<3){
+            bs=createBlocks(1+score/10000);
+        }else{bs=createBlocks(3);}
+        initBall(b1,p1);
+        
+    }
+
+    void gameDraw(){
+        b1.draw();
+        p1.draw();
+        for (int i=0;i<bs.size(); i++){
+                bs[i].draw();
+        }
+        printScore(score);
+        printBorders();
+    }
     vector<blocks> createBlocks(int level){
         vector<blocks> bs;
         
@@ -94,7 +116,7 @@ class game{
     }
 
     void launchBall(ball &b){
-        b.setVel(500);
+        b.setVel(300);
     }
 
     void addScore(int s){

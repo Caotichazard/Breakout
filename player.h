@@ -8,21 +8,33 @@ class player{
         Rectangle r; 
         float vel=250.0;
     public:
+        player(){
+
+        }
+        void setup(float x, float y){
+            r.x = x;
+            r.width = 75;
+            r.height = 20;
+            r.y = y;
+        }
         player(float x,float y){
             r.x = x;
             r.width = 75;
             r.height = 20;
             r.y = y; 
         }
-        void atualiza(){
+        void update(){
             
             if(IsKeyDown(KEY_LEFT) && r.x > 0){
                 r.x -= vel*GetFrameTime();
             }else if(IsKeyDown(KEY_RIGHT) && r.x < 425){
                 r.x += vel*GetFrameTime();
             }
-            DrawRectangle(r.x,r.y,r.width,r.height,WHITE);
             
+            
+        }
+        void draw(){
+            DrawRectangle(r.x,r.y,r.width,r.height,WHITE);
         }
         Rectangle getRect(){
             return r;

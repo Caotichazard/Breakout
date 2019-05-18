@@ -22,7 +22,7 @@ class blocks{
             rect.height=h;
             level = lvl;
         }
-        void atualiza(){
+        void draw(){
             if(level==1){
                 DrawRectangle(rect.x,rect.y,rect.width,rect.height,YELLOW);
             }

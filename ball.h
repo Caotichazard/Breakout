@@ -32,9 +32,11 @@ class ball{
         float getVel(){
             return vel;
         }
-        void atualiza(){
+        void update(){
             pos.x = pos.x + (acc.x*vel)*GetFrameTime();
-            pos.y = pos.y + (acc.y*vel)*GetFrameTime();
+            pos.y = pos.y + (acc.y*vel)*GetFrameTime(); 
+        }
+        void draw(){
             DrawCircle(pos.x,pos.y,rad,BLUE);
         }
         void collision(player *p){
