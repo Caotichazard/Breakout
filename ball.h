@@ -64,6 +64,7 @@ class ball{
         }
         bool collision(vector<blocks> *bs){
                 //blocks bc=b;
+                bool hit = false;
                 for(int i=0;i< bs->size();i++){
                     //blocks p= bs->at(i);
                     blocks *p = bs->data()+i;
@@ -79,11 +80,12 @@ class ball{
                         if(p->getLevel() == 1){
                             bs->erase(bs->begin()+i);
                             score = p->getValue();
-                            return 1;
+                            hit = true;
+                            continue;
                         }
                         p->setLevel(p->getLevel()-1);
-
-                        return 1;
+                        hit= true;
+                        continue;
                     }
                     else if(hitLR&&!hitTD){
                         acc.x *= -1;
@@ -91,10 +93,12 @@ class ball{
                         if(p->getLevel() == 1){
                             bs->erase(bs->begin()+i);
                             score = p->getValue();
-                            return 1;
+                            hit = true;
+                            continue;
                         }
                         p->setLevel(p->getLevel()-1);
-                        return 1;
+                        hit = true;
+                        continue;
                     }
                     else if(hitTD&&hitLR){
                         acc.x *= -1;
@@ -103,13 +107,15 @@ class ball{
                         if(p->getLevel() == 1){
                             bs->erase(bs->begin()+i);
                             score = p->getValue();
-                            return 1;
+                            hit = true;
+                            continue;
                         }
                         p->setLevel(p->getLevel()-1);
-                        return 1;
+                        hit = true;
+                        continue;
                     }
                 }
-                return 0;
+                return hit;
                 
             
         }
