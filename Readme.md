@@ -14,11 +14,12 @@ This game is as simple as it gets, just a basic breakout.
 My goals:
 
     -Make the game playable;
+        >Game is somewhat playable;  
     -Make a score system;
+        >Has a score mechanic but very simple;
     -Make a menu;
     -Give it sounds and music;
     -Maybe more things just for practice;
     -Not related to the game:
         >Use and learn git;
         >Share my project;
-
