@@ -45,21 +45,31 @@ class ball{
                 Vector2 r;
                 r = p->getCenter();
 
-                    bool hitLR =((pos.y >= r.y-p->getRectH()/2.0f && pos.y <= r.y+p->getRectH()/2.0f)&&CheckCollisionCircleRec(pos,rad,p->getRect()));
-                    bool hitTD = ((pos.x >= r.x-p->getRectW()/2.0f+1.0f && pos.x <= r.x+p->getRectW()/2.0f+1.0f)&&CheckCollisionCircleRec(pos,rad,p->getRect()));
-                    
-                    if(hitTD&&!hitLR){
-                        acc.y *= -1;
-                        
-                    }
-                    else if(hitLR&&!hitTD){
-                        acc.x *= -1;
-                        
-                    }
-                    else if(hitTD&&hitLR){
-                        acc.x *= -1;
-                        acc.y *= -1;
-                        
+                    float dx = sqrt(pow(pos.x - r.x,2));
+                    float dy = sqrt(pow(pos.y - r.y,2));
+                    float dInsRect = sqrt(pow(r.x+p->getRectW()/2.0f,2)+pow(r.y+p->getRectH()/2.0f,2));
+                    float dInsCirc = rad;
+
+                    float dCenters =  sqrt(pow(dx,2)+pow(dy,2));
+
+                    float dOutlines = dCenters - dInsCirc;
+                    if(CheckCollisionCircleRec(pos,rad,p->getRect())){
+                        if(dOutlines == dInsRect){
+                            cout << "bateu canto" << endl;
+                            acc.x *=-1;
+                            acc.y *= -1;
+                        }else if(dOutlines < dInsRect && dOutlines >= p->getRectW()/2.0f){
+                                if(dy < p->getRectH()/2.0f){
+                                    //cout << "bateu lateral" << endl;
+                                    acc.y *= -1;
+                                }else{
+                                    //cout << "lados x" << endl;
+                                    acc.x *=-1;
+                                }
+                        }else if(dOutlines < p->getRectW()/2.0f){
+                            //cout << "bateu meio x" << endl;
+                            acc.y *= -1;
+                        }
                     }
         }
         bool collision(vector<blocks> *bs){
@@ -71,7 +81,7 @@ class ball{
                     Vector2 r;
                     r = p->getCenter();
 
-                    bool hitLR =((pos.y >= r.y-p->getRectH()/2.0f && pos.y <= r.y+p->getRectH()/2.0f)&&CheckCollisionCircleRec(pos,rad,p->getRect()));
+                    /*bool hitLR =((pos.y >= r.y-p->getRectH()/2.0f && pos.y <= r.y+p->getRectH()/2.0f)&&CheckCollisionCircleRec(pos,rad,p->getRect()));
                     bool hitTD = ((pos.x >= r.x-p->getRectW()/2.0f+1.0f && pos.x <= r.x+p->getRectW()/2.0f+1.0f)&&CheckCollisionCircleRec(pos,rad,p->getRect()));
                     
                     if(hitTD&&!hitLR){
@@ -113,7 +123,39 @@ class ball{
                         p->setLevel(p->getLevel()-1);
                         hit = true;
                         continue;
+                    }*/
+                    float dx = sqrt(pow(pos.x - r.x,2));
+                    float dy = sqrt(pow(pos.y - r.y,2));
+                    float dInsRect = sqrt(pow(r.x+p->getRectW()/2.0f,2)+pow(r.y+p->getRectH()/2.0f,2));
+                    float dInsCirc = rad;
+
+                    float dCenters =  sqrt(pow(dx,2)+pow(dy,2));
+
+                    float dOutlines = dCenters - dInsCirc;
+                    if(CheckCollisionCircleRec(pos,rad,p->getRect())){
+                        if(dOutlines == dInsRect){
+                            cout << "bateu canto" << endl;
+                            acc.x *=-1;
+                            acc.y *= -1;
+                            bs->erase(bs->begin()+i);
+                        }else if(dOutlines < dInsRect && dOutlines >= p->getRectW()/2.0f){
+                                if(dy < p->getRectH()/2.0f){
+                                    //cout << "bateu lateral" << endl;
+                                    acc.x *= -1;
+                                    bs->erase(bs->begin()+i);
+                                }else{
+                                    //cout << "lados x" << endl;
+                                    acc.y *=-1;
+                                    bs->erase(bs->begin()+i);
+                                }
+                        }else if(dOutlines < p->getRectW()/2.0f){
+                            //cout << "bateu meio x" << endl;
+                            acc.y *= -1;
+                            bs->erase(bs->begin()+i);
+                        }
                     }
+
+
                 }
                 return hit;
                 
